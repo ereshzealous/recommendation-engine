@@ -1,0 +1,45 @@
+[
+  {
+    "id" : 1000,
+    "firstName" : "Registered",
+    "lastName" : "User1",
+    "preferences" : [
+      {
+        "genres" : ["Action", "Romance", "Comedy"],
+        "countries" : ["South Korea"]
+      }
+    ]
+  },
+  {
+    "id" : 1001,
+    "firstName" : "Registered",
+    "lastName" : "User2",
+    "preferences" : [
+      {
+        "genres" : ["War", "Thriller", "Comedy"],
+        "countries" : ["United States", "United Kingdom", "Hong Kong"]
+      }
+    ]
+  },
+  {
+    "id" : 1002,
+    "firstName" : "Registered",
+    "lastName" : "User3",
+    "preferences" : [
+      {
+        "genres" : [],
+        "countries" : ["Hong Kong", "China"]
+      }
+    ]
+  },
+  {
+    "id" : 1003,
+    "firstName" : "Registered",
+    "lastName" : "User4",
+    "preferences" : [
+      {
+        "genres" : ["War", "Thriller", "Mystery"]
+      }
+    ]
+  }
+]

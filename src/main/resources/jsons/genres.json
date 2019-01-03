@@ -1,0 +1,62 @@
+[
+  {
+    "id" : 1,
+    "name" : "Comedy"
+  },
+  {
+    "id" : 2,
+    "name" : "Romance"
+  },
+  {
+    "id" : 3,
+    "name" : "Thriller"
+  },
+  {
+    "id" : 4,
+    "name" : "Action"
+  },
+  {
+    "id" : 5,
+    "name" : "Crime"
+  },
+  {
+    "id" : 6,
+    "name" : "Sci-fi"
+  },
+  {
+    "id" : 7,
+    "name" : "War"
+  },
+  {
+    "id" : 8,
+    "name" : "Adventure"
+  },
+  {
+    "id" : 9,
+    "name" : "Gangster"
+  },
+  {
+    "id" : 10,
+    "name" : "History"
+  },
+  {
+    "id" : 11,
+    "name" : "Sport"
+  },
+  {
+    "id" : 12,
+    "name" : "Mystery"
+  },
+  {
+    "id" : 13,
+    "name" : "Drama"
+  },
+  {
+    "id": 14,
+    "name" : "Teen Movie"
+  },
+  {
+    "id" : 15,
+    "name" : "Documentary"
+  }
+]
