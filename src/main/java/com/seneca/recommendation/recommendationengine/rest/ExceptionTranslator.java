@@ -1,8 +1,6 @@
 package com.seneca.recommendation.recommendationengine.rest;
 
 import com.seneca.recommendation.recommendationengine.exception.ApplicationException;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -42,13 +40,43 @@ public class ExceptionTranslator {
         return new ResponseEntity<Object>(restFault, headers, HttpStatus.valueOf(status));
     }
 
-    @Getter
-    @Setter
     public class RestFault {
         private String status;
         private String fieldName;
         private String errorKey;
         private String errorMessage;
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public String getFieldName() {
+            return fieldName;
+        }
+
+        public void setFieldName(String fieldName) {
+            this.fieldName = fieldName;
+        }
+
+        public String getErrorKey() {
+            return errorKey;
+        }
+
+        public void setErrorKey(String errorKey) {
+            this.errorKey = errorKey;
+        }
+
+        public String getErrorMessage() {
+            return errorMessage;
+        }
+
+        public void setErrorMessage(String errorMessage) {
+            this.errorMessage = errorMessage;
+        }
     }
 }
 

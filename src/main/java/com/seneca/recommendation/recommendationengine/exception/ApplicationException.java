@@ -1,14 +1,9 @@
 package com.seneca.recommendation.recommendationengine.exception;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * @author Gorantla, Eresh
  * @created 03-01-2019
  */
-@Getter
-@Setter
 public class ApplicationException extends Exception {
     private String fieldName;
     private String errorKey;
@@ -26,5 +21,29 @@ public class ApplicationException extends Exception {
     public ApplicationException(String errorMessage) {
         this.errorMessage = errorMessage;
         this.errorKey = DEFAULT_ERROR_KEY;
+    }
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
+
+    public String getErrorKey() {
+        return errorKey;
+    }
+
+    public void setErrorKey(String errorKey) {
+        this.errorKey = errorKey;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }
