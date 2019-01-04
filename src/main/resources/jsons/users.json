@@ -8,7 +8,8 @@
         "genres" : ["Action", "Romance", "Comedy"],
         "countries" : ["South Korea"]
       }
-    ]
+    ],
+    "watchHistory" : [100, 10, 1, 23, 24, 2, 14, 16, 99, 11]
   },
   {
     "id" : 1001,
@@ -19,7 +20,8 @@
         "genres" : ["War", "Thriller", "Comedy"],
         "countries" : ["United States", "United Kingdom", "Hong Kong"]
       }
-    ]
+    ],
+    "watchHistory" : [2, 27, 29, 35, 78, 98, 15, 89, 77, 67, 30, 37, 40, 47]
   },
   {
     "id" : 1002,
@@ -30,7 +32,8 @@
         "genres" : [],
         "countries" : ["Hong Kong", "China"]
       }
-    ]
+    ],
+    "watchHistory" : [68, 71, 73, 2, 19, 90, 56, 54, 48, 49]
   },
   {
     "id" : 1003,
@@ -40,6 +43,7 @@
       {
         "genres" : ["War", "Thriller", "Mystery"]
       }
-    ]
+    ],
+    "watchHistory" : [2, 27, 29, 35, 78, 98, 15]
   }
 ]

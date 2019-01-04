@@ -7,6 +7,7 @@ import java.util.List;
  * @created 03-01-2019
  */
 public class MovieVO {
+    private Integer id;
     private String name;
     private String productionCompany;
     private String description;
@@ -69,5 +70,13 @@ public class MovieVO {
 
     public void setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
