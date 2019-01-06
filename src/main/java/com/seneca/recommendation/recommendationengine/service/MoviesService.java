@@ -110,6 +110,14 @@ public class MoviesService {
 							returning = getMoviesGroupedByGenres(genres, movieVOs);
 						}
 					}
+					
+										
+					List<Long> watchedHistory = requiredUser.getWatchHistory();
+					System.out.println("wathed history");
+					watchedHistory.forEach(System.out::println);
+					
+					returning = returning.stream().filter(movie->requiredUser.getWatchHistory().contains(movie.getId())).collect(Collectors.toList());
+
 					/*
 					 * If no genre or country is given input
 					 */
