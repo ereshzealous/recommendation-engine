@@ -36,7 +36,7 @@ public class RecommendationEngineApplicationTests {
 			ResponseEntity movies= movieResource.getMovies(1001L, null, null);
 			
 			List<MovieVO> movieVOs = (List<MovieVO>) movies.getBody();
-			assertEquals(List.class, movieVOs);
+			//assertEquals(List.class, movieVOs);
 			assertEquals(20,movieVOs.size() );
 		} catch (ApplicationException e) {
 			
