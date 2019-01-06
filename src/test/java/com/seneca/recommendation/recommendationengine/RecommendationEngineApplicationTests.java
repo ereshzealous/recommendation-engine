@@ -80,7 +80,7 @@ public class RecommendationEngineApplicationTests {
 	@Test
 	public void testDefault() {
 		try {
-			ResponseEntity movies= movieResource.getMovies(null);
+			ResponseEntity movies= movieResource.getMovies(null,null,null);
 			
 			List<MovieVO> movieVOs = (List<MovieVO>) movies.getBody();
 			//assertEquals(List.class, movieVOs);
@@ -89,5 +89,6 @@ public class RecommendationEngineApplicationTests {
 			
 		}
 	}
+
 
 }
