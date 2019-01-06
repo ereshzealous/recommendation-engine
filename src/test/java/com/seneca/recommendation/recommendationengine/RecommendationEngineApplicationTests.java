@@ -30,10 +30,57 @@ public class RecommendationEngineApplicationTests {
 	}
 
 	@Test
-	public void testGetMovies() {
+	public void testGetMoviesByMovies() {
 		try {
+			List<String> list = new ArrayList<>();
+			list.add("United States");
+			ResponseEntity movies= movieResource.getMovies(1001L, list, null);
 			
-			ResponseEntity movies= movieResource.getMovies(1001L, null, null);
+			List<MovieVO> movieVOs = (List<MovieVO>) movies.getBody();
+			//assertEquals(List.class, movieVOs);
+			assertEquals(20,movieVOs.size() );
+		} catch (ApplicationException e) {
+			
+		}
+	}
+	
+	
+	@Test
+	public void testGetMoviesByGenre() {
+		try {
+			List<String> list = new ArrayList<>();
+			list.add("War");
+			ResponseEntity movies= movieResource.getMovies(1001L, null, list);
+			
+			List<MovieVO> movieVOs = (List<MovieVO>) movies.getBody();
+			//assertEquals(List.class, movieVOs);
+			assertEquals(20,movieVOs.size() );
+		} catch (ApplicationException e) {
+			
+		}
+	}
+	@Test
+	public void testGetMoviesByCountryGenre() {
+		try {
+			List<String> list = new ArrayList<>();
+			list.add("War");
+			List<String> listCountry = new ArrayList<>();
+			list.add("United States");
+			ResponseEntity movies= movieResource.getMovies(1001L, listCountry, list);
+			
+			List<MovieVO> movieVOs = (List<MovieVO>) movies.getBody();
+			//assertEquals(List.class, movieVOs);
+			assertEquals(20,movieVOs.size() );
+		} catch (ApplicationException e) {
+			
+		}
+	}
+	
+	
+	@Test
+	public void testDefault() {
+		try {
+			ResponseEntity movies= movieResource.getMovies(null);
 			
 			List<MovieVO> movieVOs = (List<MovieVO>) movies.getBody();
 			//assertEquals(List.class, movieVOs);
