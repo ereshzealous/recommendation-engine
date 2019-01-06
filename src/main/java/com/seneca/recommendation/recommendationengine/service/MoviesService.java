@@ -57,8 +57,6 @@ public class MoviesService {
         try {
             File propertiesFile = ResourceUtils.getFile("classpath:jsons/users.json");
             List<User> users = mapper.readValue(propertiesFile, mapper.getTypeFactory().constructCollectionType(List.class, User.class));
-           
-            
             return users;
         } catch (Exception e) {
             throw new ApplicationException(e.getMessage());
@@ -71,7 +69,7 @@ public class MoviesService {
 	 * @param userId
 	 * @return List of top 20 movies 
 	 */
-	public List<MovieVO> getRecommendedMovies(Long userId) {
+	public List<MovieVO> getRecommendedMovies(Long userId,  List<String> countries, List<String> genres) throws ApplicationException{
 		// TODO ---- For registered and unregistered
 		try {
 			List<User> users = getAllUsers();
@@ -97,28 +95,30 @@ public class MoviesService {
 
 			} else {
 				// Registered user
-
+				
 				if (requiredUser != null) {
 					List<MovieVO> movieVOs = getAllMovies();
-					List<Preferences> preferences = requiredUser.getPreferences();
-					for (Preferences preferences2 : preferences) {
-						List<String> coutries = preferences2.getCountries();
-						List<String> generes = preferences2.getGenres();
-						
-						for (Iterator iterator = generes.iterator(); iterator.hasNext();) {
-							String genre = (String) iterator.next();
-							returning.addAll(movieVOs.stream().filter(n -> n.getGenres().contains(genre)).limit(20)
-									.collect(Collectors.toList()));
-						}
-						
-						if (returning.size()<20) {
-							for (Iterator iterator = coutries.iterator(); iterator.hasNext();) {
-								String country = (String) iterator.next();
-								returning.addAll(movieVOs.stream().filter(n -> n.getCountry().equals(country)).limit(20)
-										.collect(Collectors.toList()));
-							}
+					
+					if(countries!=null && !countries.isEmpty()){
+						for (String country : countries){
+							returning = getMoviesGroupedByCountries(country, movieVOs);
+							
 						}
 					}
+					if (genres!=null && !genres.isEmpty()) {
+						if (returning.size() < 20) {
+							returning = getMoviesGroupedByGenres(genres, movieVOs);
+						}
+					}
+					/*
+					 * If no genre or country is given input
+					 */
+					if(returning.isEmpty()){
+						returning = movieVOs;
+						
+					}
+					
+					//returning.stream().filter(requiredUser.getWatchHistory())
 					returning.sort((MovieVO m1, MovieVO m2)-> m1.getCountry().compareTo(m2.getCountry()));
 					returning.sort((MovieVO s1, MovieVO s2) ->  Long.compare(s2.getLikesCount() , s1.getLikesCount()));
 					//returning.sort((MovieVO m1, MovieVO m2)-> (int)(m1.getLikesCount()-m2.getLikesCount()));
@@ -128,16 +128,32 @@ public class MoviesService {
 			returning = returning.subList(0, 20);
 			return returning;
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			throw new ApplicationException(e.getMessage());
 		}
-		return Collections.emptyList();
 	}
 
-    public List<?> getMoviesGroupedByCountries() {
-        return Collections.emptyList();
+    public List<MovieVO> getMoviesGroupedByCountries(String countries, List<MovieVO> movieVOs) {
+    	List<MovieVO> vos = movieVOs.stream().filter(m->m.getCountry().equals(countries)).collect(Collectors.toList());
+		
+    	vos.forEach((s)->System.out.println("Movie Name"+s.getName()));
+		
+		if(vos.size()==0){
+			return Collections.emptyList();
+		}
+		
+		return vos;
     }
 
-    public List<?> getMoviesGroupedByGenres() {
-        return Collections.emptyList();
+    public List<MovieVO> getMoviesGroupedByGenres(List<String> geners, List<MovieVO> movieVOs) {
+			
+			List<MovieVO> vos = movieVOs.stream().filter(m->m.getGenres().containsAll(geners)).collect(Collectors.toList());
+			
+			vos.forEach((s)->System.out.println("Movie Name"+s.getName()));
+			
+			if(vos.size()==0){
+				return Collections.emptyList();
+			}
+			
+			return vos;
     }
 }

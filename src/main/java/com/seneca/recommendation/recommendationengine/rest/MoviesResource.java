@@ -40,9 +40,12 @@ public class MoviesResource {
     }
     
     @GetMapping("/getMovies")
-    public ResponseEntity<Object> getHello(@RequestParam(value="userId", required=false) Long userId) throws ApplicationException {
-    	Long userId1 = userId;
-    	 List<MovieVO> movies = moviesService.getRecommendedMovies(userId1);
+    public ResponseEntity<Object> getHello(@RequestParam(value="userId", required=false) Long userId,
+    		@RequestParam(value="countries", required=false) List<String> countries,
+    		@RequestParam(value="genres", required=false) List<String> genres) throws ApplicationException {
+    		
+    	 List<MovieVO> movies = moviesService.getRecommendedMovies(userId, countries, genres);
+    	 
         return new ResponseEntity<>(movies,HttpStatus.OK);
     }
 }
