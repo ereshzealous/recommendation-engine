@@ -40,7 +40,7 @@ public class MoviesResource {
     }
     
     @GetMapping("/getMovies")
-    public ResponseEntity<Object> getHello(@RequestParam(value="userId", required=false) Long userId,
+    public ResponseEntity<Object> getMovies(@RequestParam(value="userId", required=false) Long userId,
     		@RequestParam(value="countries", required=false) List<String> countries,
     		@RequestParam(value="genres", required=false) List<String> genres) throws ApplicationException {
     		
