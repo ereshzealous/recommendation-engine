@@ -53,6 +53,7 @@ public class MoviesService {
 	Predicate<String> checkInput = (str) -> str == null || str.isEmpty();
 
 	BiPredicate<UsersVO, Integer> checkMovieWatch = (vo, id) -> vo.getWatchHistory().contains(id);
+	Comparator<MovieVO> sortingByLikesDecs=(i, j) -> j.getLikesCount().compareTo(i.getLikesCount());
 
 	private List<MovieVO> getUsersUnwatchedOrWatchedMovies(UsersVO usersVO, List<MovieVO> movies,
 			BiPredicate<UsersVO, Integer> predicate) {
@@ -67,7 +68,7 @@ public class MoviesService {
 		// this method will return movies that are not there in watched list or
 		// already in the unwatched list and order by likesCount in desc
 
-		return allMovies.stream().sorted((i, j) -> j.getLikesCount().compareTo(i.getLikesCount()))
+		return allMovies.stream().sorted(sortingByLikesDecs)
 				.filter(mov -> prefPredicate.test(usersVO, mov))
 				.filter(mov -> predicate.test(usersVO, mov.getId())
 						&& alreadyOnList.stream().noneMatch(saw -> checkAlrdyInList.test(saw, mov.getId())))
@@ -122,7 +123,7 @@ public class MoviesService {
 			if (!userObj.isPresent()) {
 				// Unregistered user.
 				finalMovieList = getAllMovies().stream()
-						.sorted((i, y) -> y.getLikesCount().compareTo(i.getLikesCount())).limit(20)
+						.sorted(sortingByLikesDecs).limit(20)
 						.collect(Collectors.toList());
 
 			} else {
@@ -172,7 +173,7 @@ public class MoviesService {
 					listPredicateForFilter = (mo, str) -> mo.getCountry().equalsIgnoreCase(str);
 
 				finalMovieList = getAllMovies().stream().filter(mo -> listPredicateForFilter.test(mo, preference))
-						.sorted((i, y) -> y.getLikesCount().compareTo(i.getLikesCount())).limit(20)
+						.sorted(sortingByLikesDecs).limit(20)
 						.collect(Collectors.toList());
 			} else {
 				// Registered user
@@ -261,12 +262,12 @@ public class MoviesService {
 
 			orderFirstList = getMoviesByPrefOrder(moviesList,
 					checkOrder.test(orderBy) ? genrePrefPredicate : countryPrefPredicate, orderBy, userObj, listSize,
-					(i, j) -> j.getLikesCount().compareTo(i.getLikesCount()), new ArrayList<>());
+							sortingByLikesDecs, new ArrayList<>());
 
 			if (orderFirstList.size() < listSize && !moviesByUserSelectedPref)
 				orderSecondList = getMoviesByPrefOrder(moviesList,
 						checkOrder.negate().test(orderBy) ? genrePrefPredicate : countryPrefPredicate, orderBy, userObj,
-						(listSize - orderFirstList.size()), (i, j) -> j.getLikesCount().compareTo(i.getLikesCount()),
+						(listSize - orderFirstList.size()), sortingByLikesDecs,
 						orderFirstList);
 
 			orderedMoviesList = Stream.concat(orderFirstList.stream(), orderSecondList.stream())
@@ -293,7 +294,7 @@ public class MoviesService {
 							(20 - usersMovies.size()));
 
 				return Stream.concat(unwatchedMovieList.stream(), pullMoviesFromStore.stream())
-						.sorted((i, j) -> j.getLikesCount().compareTo(i.getLikesCount())).collect(Collectors.toList());
+						.sorted(sortingByLikesDecs).collect(Collectors.toList());
 
 			}
 
