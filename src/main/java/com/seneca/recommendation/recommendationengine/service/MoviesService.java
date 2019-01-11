@@ -131,7 +131,7 @@ public class MoviesService {
 
 				finalMovieList = getRecommendedMovies(userObj.get(), "genre", 20,
 						false);/*
-								 * this method excepts user details and order in
+								 * this method excepts user details and orderBy in
 								 * which movies should get populate first. if
 								 * you pass country then movies list will
 								 * contain country order first
@@ -259,7 +259,11 @@ public class MoviesService {
 			List<MovieVO> orderFirstList = new ArrayList<>();
 			List<MovieVO> orderSecondList = new ArrayList<>();
 			List<MovieVO> moviesList = getAllMovies();
-
+			
+			// order of the list depends on the what we want/passed in orderBy
+			// variable i.e if you pass country in than order will country,
+			// genre and sorted by likesCount in desc
+			
 			orderFirstList = getMoviesByPrefOrder(moviesList,
 					checkOrder.test(orderBy) ? genrePrefPredicate : countryPrefPredicate, orderBy, userObj, listSize,
 							sortingByLikesDecs, new ArrayList<>());
@@ -273,13 +277,14 @@ public class MoviesService {
 			orderedMoviesList = Stream.concat(orderFirstList.stream(), orderSecondList.stream())
 					.collect(Collectors.toList());
 
-			unwatchedMovieList = getUsersUnwatchedOrWatchedMovies(userObj, orderedMoviesList, checkMovieWatch.negate());// populating
-																														// unwatched
-																														// movies
-
-			watchedMovieList = getUsersUnwatchedOrWatchedMovies(userObj, orderedMoviesList, checkMovieWatch);// populating
-																												// watched
-																												// movies
+			/*
+			 * populating unwatched movies
+			 */ unwatchedMovieList = getUsersUnwatchedOrWatchedMovies(userObj, orderedMoviesList, checkMovieWatch.negate());
+			
+			 /*
+				 * populating watched movies
+				 */ 
+			watchedMovieList = getUsersUnwatchedOrWatchedMovies(userObj, orderedMoviesList, checkMovieWatch);
 
 			if (moviesByUserSelectedPref) {
 				// user scenario 1 and point 6 implementation
