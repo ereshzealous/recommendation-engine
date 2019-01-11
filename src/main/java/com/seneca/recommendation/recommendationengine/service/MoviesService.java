@@ -44,10 +44,10 @@ public class MoviesService {
 	BiPredicate<MovieVO, String> listPredicateForFilter = null;
 
 	BiPredicate<UsersVO, MovieVO> genrePrefPredicate = (vo, mo) -> mo.getGenres().stream()
-			.anyMatch(gen -> !vo.getPreferences().isEmpty() && vo.getPreferences().get(0).getGenres().contains(gen));
+			.anyMatch(gen -> vo.getPreferences().get(0).getGenres().contains(gen));
 
-	BiPredicate<UsersVO, MovieVO> countryPrefPredicate = (vo, mo) -> !vo.getPreferences().isEmpty()
-			&& vo.getPreferences().get(0).getCountries().contains(mo.getCountry());
+	BiPredicate<UsersVO, MovieVO> countryPrefPredicate = (vo, mo) -> vo.getPreferences().get(0).getCountries()
+			.contains(mo.getCountry());
 
 	Predicate<String> checkPref = (str) -> str.equalsIgnoreCase("genre");
 	Predicate<String> checkInput = (str) -> str == null || str.isEmpty();
@@ -291,9 +291,7 @@ public class MoviesService {
 
 				if (unwatchedMovieList.size() < 20)
 					pullMoviesFromStore = getMoviesByUserPreferenceFromStore(userObj, moviesList, usersMovies,
-							checkMovieWatch.negate(), (saw, id) -> saw.getId() == id, checkOrder.test(orderBy) ? (vo,
-									mo) -> vo.getPreferences().get(0).getGenres().stream().noneMatch(mov->mo.getGenres().contains(mov))
-									: (vo, mo) -> !vo.getPreferences().get(0).getCountries().contains(mo.getCountry()),
+							checkMovieWatch.negate(), (saw, id) -> saw.getId() == id, genrePrefPredicate.negate(),
 							(20 - unwatchedMovieList.size()));
 
 				return Stream.concat(unwatchedMovieList.stream(), pullMoviesFromStore.stream())
