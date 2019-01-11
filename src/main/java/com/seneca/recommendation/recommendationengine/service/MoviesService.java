@@ -164,7 +164,7 @@ public class MoviesService {
 			Optional<UsersVO> userObj = getUser(userId);
 
 			if (!userObj.isPresent()) {
-				// Unregistered user.considering 0 as an unregistered userId and
+				// Unregistered user.
 				// user set his/her preferences
 
 				if (checkPref.test(prefType))
