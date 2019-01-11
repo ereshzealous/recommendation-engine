@@ -23,4 +23,17 @@ public class GenresVO {
     public void setName(String name) {
         this.name = name;
     }
+
+	public GenresVO(Integer id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
+	public GenresVO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+    
+    
 }

@@ -79,4 +79,24 @@ public class MovieVO {
     public void setId(Integer id) {
         this.id = id;
     }
+
+	public MovieVO(Integer id, String name, String productionCompany, String description, String country,
+			List<String> genres, Long likesCount, Integer releaseYear) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.productionCompany = productionCompany;
+		this.description = description;
+		this.country = country;
+		this.genres = genres;
+		this.likesCount = likesCount;
+		this.releaseYear = releaseYear;
+	}
+
+	public MovieVO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+    
+    
 }

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,18 +22,34 @@ import java.util.List;
 @RequestMapping("/api")
 public class MoviesResource {
 
-    @Autowired
-    private MoviesService moviesService;
+	@Autowired
+	private MoviesService moviesService;
 
-    @GetMapping("/movies")
-    public ResponseEntity<Object> getAllMovies() throws ApplicationException {
-        List<MovieVO> movieVOS = moviesService.getAllMovies();
-        return new ResponseEntity<Object>(movieVOS, HttpStatus.OK);
-    }
+	@GetMapping("/movies")
+	public ResponseEntity<Object> getAllMovies() throws ApplicationException {
+		List<MovieVO> movieVOS = moviesService.getAllMovies();
+		return new ResponseEntity<Object>(movieVOS, HttpStatus.OK);
+	}
 
-    @GetMapping("/genres")
-    public ResponseEntity<Object> getAllGenres() throws ApplicationException {
-        List<GenresVO> movieVOS = moviesService.getAllGeneres();
-        return new ResponseEntity<Object>(movieVOS, HttpStatus.OK);
-    }
+	@GetMapping("/genres")
+	public ResponseEntity<Object> getAllGenres() throws ApplicationException {
+		List<GenresVO> movieVOS = moviesService.getAllGeneres();
+		return new ResponseEntity<Object>(movieVOS, HttpStatus.OK);
+	}
+
+	@GetMapping("/getMoviesByUser")
+	public ResponseEntity<?> getMoviesByUser(@RequestParam("userId") Long userId) {
+		return moviesService.getRecommendedMovies(userId);
+	}
+
+	@GetMapping("/getMoviesByUserPref")
+	public ResponseEntity<?> getMoviesByUserWithPreference(@RequestParam("userId") Long userId,
+			@RequestParam("prefType") String prefType, @RequestParam("pref") String preference) {
+		return moviesService.getRecommendedMoviesByPreference(userId, prefType, preference);
+	}
+
+	@GetMapping("/getMoviesGroupedByGenre")
+	public ResponseEntity<?> getMoviesGroupedByGenre() throws ApplicationException {
+		return moviesService.getMoviesGroupedByGenres();
+	}
 }
