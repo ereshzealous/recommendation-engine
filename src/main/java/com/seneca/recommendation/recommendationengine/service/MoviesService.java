@@ -211,6 +211,7 @@ public class MoviesService {
 
 	}
 
+	//usecase 2, get movies grouped by genre
 	public ResponseEntity<?> getMoviesGroupedByGenres() throws ApplicationException {
 
 		Map<String, List<MovieVO>> map = new HashMap<>();
@@ -219,14 +220,14 @@ public class MoviesService {
 			getAllGeneres().stream().forEach(genre -> {
 				try {
 					getAllMovies().forEach(mov -> {
-						if (map.get(genre.getName()) == null && !moviesId.contains(mov.getId())) {
+						if (map.get(genre.getName()) == null && !moviesId.contains(mov.getId()) && mov.getGenres().contains(genre.getName())) {
 							List<MovieVO> moviesList = new ArrayList<>();
 							moviesId.add(mov.getId());
 							moviesList.add(mov);
 							map.put(genre.getName(), moviesList);
 
 						} else {
-							if (!moviesId.contains(mov.getId())) {
+							if (!moviesId.contains(mov.getId()) && mov.getGenres().contains(genre.getName())) {
 								map.get(genre.getName()).add(mov);
 								moviesId.add(mov.getId());
 							}
