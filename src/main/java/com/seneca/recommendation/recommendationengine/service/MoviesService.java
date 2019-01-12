@@ -128,10 +128,10 @@ public class MoviesService {
 
 				finalMovieList = getRecommendedMovies(userObj.get(), "genre", 20,
 						false);/*
-								 * this method excepts user details and orderBy
+								 * this method excepts user details , orderBy i.e genre or country 
 								 * in which movies should get populate first. if
 								 * you pass country then movies list will
-								 * contain country order first
+								 * contain country order first, list size i.e 20 and one flag if user externally provided the preference
 								 */
 
 			}
@@ -184,11 +184,11 @@ public class MoviesService {
 
 				finalMovieList = getRecommendedMovies(userObj.get(), prefType, 20,
 						true);/*
-								 * this method excepts user details and order in
-								 * which movies should get populate first. if
-								 * you pass country then movies list will
-								 * contain country order first
-								 */
+				 * this method excepts user details , orderBy i.e genre or country 
+				 * in which movies should get populate first. if
+				 * you pass country then movies list will
+				 * contain country order first, list size i.e 20 and one flag if user externally provided the preference
+				 */
 
 			}
 		} catch (ApplicationException ex) {
