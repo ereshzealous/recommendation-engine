@@ -286,7 +286,7 @@ public class MoviesService {
 
 			if (moviesByUserSelectedPref) {
 				// user scenario 1 and point 6 implementation
-				List<MovieVO> pullMoviesFromStore = null;
+				List<MovieVO> pullMoviesFromStore = new ArrayList<>();
 				List<MovieVO> usersMovies = Stream.concat(unwatchedMovieList.stream(), watchedMovieList.stream())
 						.collect(Collectors.toList());
 
