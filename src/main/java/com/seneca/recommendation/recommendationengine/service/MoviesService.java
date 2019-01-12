@@ -295,6 +295,7 @@ public class MoviesService {
 							checkMovieWatch.negate(), (saw, id) -> saw.getId() == id, genrePrefPredicate.negate(),
 							(20 - unwatchedMovieList.size()));
 
+				// returning list with first unwatched movies followed by  movies from movie store
 				return Stream.concat(unwatchedMovieList.stream(), pullMoviesFromStore.stream())
 						.collect(Collectors.toList());
 
