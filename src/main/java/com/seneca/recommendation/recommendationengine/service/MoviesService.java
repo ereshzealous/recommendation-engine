@@ -40,7 +40,7 @@ public class MoviesService {
 	@Autowired
 	private ObjectMapper mapper;
 
-	Predicate<String> checkOrder = (str) -> str.equalsIgnoreCase("genre");
+	Predicate<String> isGenreOrElse = (str) -> str.equalsIgnoreCase("genre");
 	BiPredicate<MovieVO, String> listPredicateForFilter = null;
 
 	BiPredicate<UsersVO, MovieVO> genrePrefPredicate = (vo, mo) -> mo.getGenres().stream()
@@ -49,7 +49,6 @@ public class MoviesService {
 	BiPredicate<UsersVO, MovieVO> countryPrefPredicate = (vo, mo) -> vo.getPreferences().get(0).getCountries()
 			.contains(mo.getCountry());
 
-	Predicate<String> checkPref = (str) -> str.equalsIgnoreCase("genre");
 	Predicate<String> checkInput = (str) -> str == null || str.isEmpty();
 
 	BiPredicate<UsersVO, Integer> checkMovieWatch = (vo, id) -> vo.getWatchHistory().contains(id);
@@ -165,7 +164,7 @@ public class MoviesService {
 				// Unregistered user.
 				// user set his/her preferences
 
-				if (checkPref.test(prefType))
+				if (isGenreOrElse.test(prefType))
 					listPredicateForFilter = (mo, str) -> mo.getGenres().contains(str);
 				else
 					listPredicateForFilter = (mo, str) -> mo.getCountry().equalsIgnoreCase(str);
@@ -178,7 +177,7 @@ public class MoviesService {
 				prefL.add(preference);
 				// user preference I am assuming it would be two types: genre or
 				// country
-				if (checkPref.test(prefType))
+				if (isGenreOrElse.test(prefType))
 					userObj.get().getPreferences().get(0).setGenres(prefL);
 				else
 					userObj.get().getPreferences().get(0).setCountries(prefL);
@@ -211,7 +210,7 @@ public class MoviesService {
 
 	}
 
-	//usecase 2, get movies grouped by genre
+	// usecase 2, get movies grouped by genre
 	public ResponseEntity<?> getMoviesGroupedByGenres() throws ApplicationException {
 
 		Map<String, List<MovieVO>> map = new HashMap<>();
@@ -220,7 +219,8 @@ public class MoviesService {
 			getAllGeneres().stream().forEach(genre -> {
 				try {
 					getAllMovies().forEach(mov -> {
-						if (map.get(genre.getName()) == null && !moviesId.contains(mov.getId()) && mov.getGenres().contains(genre.getName())) {
+						if (map.get(genre.getName()) == null && !moviesId.contains(mov.getId())
+								&& mov.getGenres().contains(genre.getName())) {
 							List<MovieVO> moviesList = new ArrayList<>();
 							moviesId.add(mov.getId());
 							moviesList.add(mov);
@@ -263,13 +263,13 @@ public class MoviesService {
 			// genre and sorted by likesCount in desc
 
 			orderFirstList = getMoviesByPrefOrder(moviesList,
-					checkOrder.test(orderBy) ? genrePrefPredicate : countryPrefPredicate, orderBy, userObj, listSize,
+					isGenreOrElse.test(orderBy) ? genrePrefPredicate : countryPrefPredicate, orderBy, userObj, listSize,
 					sortingByLikesDecs, new ArrayList<>());
 
 			if (orderFirstList.size() < listSize && !moviesByUserSelectedPref)
 				orderSecondList = getMoviesByPrefOrder(moviesList,
-						checkOrder.negate().test(orderBy) ? genrePrefPredicate : countryPrefPredicate, orderBy, userObj,
-						(listSize - orderFirstList.size()), sortingByLikesDecs, orderFirstList);
+						isGenreOrElse.negate().test(orderBy) ? genrePrefPredicate : countryPrefPredicate, orderBy,
+						userObj, (listSize - orderFirstList.size()), sortingByLikesDecs, orderFirstList);
 
 			orderedMoviesList = Stream.concat(orderFirstList.stream(), orderSecondList.stream())
 					.collect(Collectors.toList());
