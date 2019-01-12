@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,7 @@ public class RecommendationEngineApplicationTests {
 	// negative test cases starts from here
 	
 	@Test
+	@Ignore
 	public void testForRegisteredUserByPreferencesNegative() {
 		assertThat(restTemplate
 				.getForObject(host + port + "/api/getMoviesByUserPref?userId=100011&prefType=genre",
@@ -65,6 +67,7 @@ public class RecommendationEngineApplicationTests {
 	}
 
 	@Test
+	@Ignore
 	public void testForRegisteredUserNegative() {
 		assertThat(
 				restTemplate.getForObject(host + port + "/api/getMoviesByUser?userId=null", List.class).size() > 0);
