@@ -30,13 +30,13 @@ public class RecommendationEngineApplicationTests {
 
 	@Test
 	public void testForUnregisteredUser() {
-		assertThat(restTemplate.getForObject(host + port + "/api/getMoviesByUser?userId=0", List.class).size() > 0);
+		assertThat(restTemplate.getForObject(host + port + "/api/getMoviesByUser?userId=0", List.class).size() ==20);
 
 	}
 
 	@Test
 	public void testForRegisteredUser() {
-		assertThat(restTemplate.getForObject(host + port + "/api/getMoviesByUser?userId=1000", List.class).size() > 0);
+		assertThat(restTemplate.getForObject(host + port + "/api/getMoviesByUser?userId=1000", List.class).size() ==20);
 
 	}
 
@@ -45,13 +45,13 @@ public class RecommendationEngineApplicationTests {
 		assertThat(restTemplate
 				.getForObject(host + port + "/api/getMoviesByUserPref?userId=1000&prefType=genre&pref=Action",
 						List.class)
-				.size() > 0);
+				.size() ==20);
 	}
 	
 	@Test
 	public void testMoviesGroupedByGenre() {
 		assertThat(
-				restTemplate.getForObject(host + port + "/api/getMoviesGroupedByGenre", Map.class).size() > 0);
+				restTemplate.getForObject(host + port + "/api/getMoviesGroupedByGenre", Map.class).size() >0);
 
 	}
 
@@ -63,14 +63,14 @@ public class RecommendationEngineApplicationTests {
 		assertThat(restTemplate
 				.getForObject(host + port + "/api/getMoviesByUserPref?userId=100011&prefType=genre",
 						List.class)
-				.size() > 0);
+				.size() ==20);
 	}
 
 	@Test
 	@Ignore
 	public void testForRegisteredUserNegative() {
 		assertThat(
-				restTemplate.getForObject(host + port + "/api/getMoviesByUser?userId=null", List.class).size() > 0);
+				restTemplate.getForObject(host + port + "/api/getMoviesByUser?userId=null", List.class).size()==20);
 
 	}
 	
