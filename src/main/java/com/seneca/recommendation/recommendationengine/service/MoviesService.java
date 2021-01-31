@@ -24,6 +24,7 @@ public class MoviesService {
 
     public List<MovieVO> getAllMovies() throws ApplicationException {
         try {
+        	//testing
             File propertiesFile = ResourceUtils.getFile("classpath:jsons/movies.json");
             List<MovieVO> movieVOS = mapper.readValue(propertiesFile, mapper.getTypeFactory().constructCollectionType(List.class, MovieVO.class));
             return movieVOS;
